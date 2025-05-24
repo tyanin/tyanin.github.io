@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CS Masters Student specializing in accessibility - Portfolio showcasing inclusive design and accessible technology">
+    <meta name="author" content="Your Name">
+    <meta name="theme-color" content="#667eea">
+    <title>Your Name - Accessibility Researcher & Advocate</title>
+    
+    <style>
+        /* CSS Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        /* CSS Custom Properties for easy theming */
+        :root {
+            --primary-color: #667eea;
+            --primary-dark: #5a6fd8;
+            --secondary-color: #764ba2;
+            --text-color: #2c3e50;
+            --text-light: #6c757d;
+            --background-color: #ffffff;
+            --surface-color: #f8f9fa;
+            --border-color: #e9ecef;
+            --focus-color: #ff6b6b;
+            --success-color: #51cf66;
+            --warning-color: #ffd43b;
+            
+            /* Typography scale */
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+            --font-size-2xl: 1.5rem;
+            --font-size-3xl: 2rem;
+            --font-size-4xl: 2.5rem;
+            
+            /* Spacing scale */
+            --space-xs: 0.25rem;
+            --space-sm: 0.5rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            --space-2xl: 3rem;
+            --space-3xl: 4rem;
+        }
+        
+        /* High contrast theme */
+        @media (prefers-contrast: high) {
+            :root {
+                --primary-color: #0000ff;
+                --text-color: #000000;
+                --background-color: #ffffff;
+                --surface-color: #ffffff;
+                --border-color: #000000;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-color: #e9ecef;
+                --text-light: #adb5bd;
+                --background-color: #1a1a1a;
+                --surface-color: #2d3748;
+                --border-color: #4a5568;
+            }
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            font-size: var(--font-size-base);
+            scroll-behavior: smooth;
+        }
+        
+        /* Respect user's motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+        
+        /* Enhanced skip links */
+        .skip-links {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        
+        .skip-link {
+            position: absolute;
+            top: -100px;
+            left: var(--space-md);
+            background: var(--text-color);
+            color: var(--background-color);
+            padding: var(--space-sm) var(--space-md);
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 4px;
+            transition: top 0.3s ease;
+        }
+        
+        .skip-link:focus {
+            top: var(--space-md);
+            outline: 3px solid var(--focus-color);
+            outline-offset: 2px;
+        }
+        
+        /* Focus management */
+        *:focus {
+            outline: 3px solid var(--focus-color);
+            outline-offset: 2px;
+        }
+        
+        *:focus:not(:focus-visible) {
+            outline: none;
+        }
+        
+        *:focus-visible {
+            outline: 3px solid var(--focus-color);
+            outline-offset: 2px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: var(--space-3xl) 0;
+            text-align: center;
+        }
+        
+        .header-content h1 {
+            font-size: clamp(var(--font-size-2xl), 5vw, var(--font-size-4xl));
+            margin-bottom: var(--space-sm);
+            font-weight: 300;
+            letter-spacing: -0.02em;
+        }
+        
+        .header-content .tagline {
+            font-size: clamp(var(--font-size-base), 3vw, var(--font-size-xl));
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+            font-weight: 400;
+        }
+        
+        /* Enhanced Navigation with ARIA support */
+        nav {
+            background-color: var(--surface-color);
+            padding: var(--space-md) 0;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: var(--space-lg);
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            padding: var(--space-sm) var(--space-md);
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            position: relative;
+            min-height: 44px; /* Touch target size */
+            min-width: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        nav a:hover,
+        nav a:focus {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-1px);
+        }
+        
+        nav a[aria-current="page"] {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        /* Main Content */
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+        }
+        
+        section {
+            margin: var(--space-3xl) 0;
+            padding: var(--space-xl) 0;
+        }
+        
+        section:not(:last-child) {
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        /* Enhanced heading hierarchy */
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--text-color);
+            line-height: 1.2;
+            margin-bottom: var(--space-md);
+        }
+        
+        h2 {
+            font-size: var(--font-size-3xl);
+            margin-bottom: var(--space-lg);
+            border-left: 4px solid var(--primary-color);
+            padding-left: var(--space-md);
+            scroll-margin-top: 80px; /* Account for sticky nav */
+        }
+        
+        h3 {
+            font-size: var(--font-size-xl);
+            margin-bottom: var(--space-sm);
+            color: var(--primary-color);
+        }
+        
+        /* Enhanced text readability */
+        p {
+            margin-bottom: var(--space-md);
+            max-width: 70ch; /* Optimal reading width */
+        }
+        
+        /* About Me Section */
+        .about-content {
+            font-size: var(--font-size-lg);
+            line-height: 1.7;
+        }
+        
+        .about-content p:first-child::first-letter {
+            font-size: 3em;
+            line-height: 1;
+            float: left;
+            margin: 0.1em 0.1em 0 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        /* Accessibility statement */
+        .accessibility-note {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            border: 1px solid var(--primary-color);
+            border-radius: 8px;
+            padding: var(--space-lg);
+            margin: var(--space-xl) 0;
+            position: relative;
+        }
+        
+        .accessibility-note::before {
+            content: "♿";
+            font-size: var(--font-size-2xl);
+            position: absolute;
+            top: var(--space-md);
+            right: var(--space-md);
+            opacity: 0.7;
+        }
+        
+        .accessibility-note h3 {
+            color: var(--primary-color);
+            margin-bottom: var(--space-sm);
+        }
+        
+        /* Enhanced Resume Section */
+        .resume-item {
+            margin-bottom: var(--space-xl);
+            padding: var(--space-lg);
+            background-color: var(--surface-color);
+            border-radius: 12px;
+            border-left: 4px solid var(--primary-color);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .resume-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .resume-item h3 {
+            color: var(--primary-color);
+            margin-bottom: var(--space-xs);
+            font-size: var(--font-size-xl);
+        }
+        
+        .resume-item .date {
+            font-style: italic;
+            color: var(--text-light);
+            margin-bottom: var(--space-sm);
+            font-size: var(--font-size-sm);
+        }
+        
+        .resume-item .institution {
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: var(--space-sm);
+        }
+        
+        .resume-item ul {
+            margin-left: var(--space-lg);
+            margin-top: var(--space-sm);
+        }
+        
+        .resume-item li {
+            margin-bottom: var(--space-xs);
+            line-height: 1.6;
+        }
+        
+        /* Enhanced Projects Section */
+        .projects-grid {
+            display: grid;
+            gap: var(--space-xl);
+            margin-top: var(--space-xl);
+        }
+        
+        .project {
+            padding: var(--space-xl);
+            background-color: var(--background-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .project:hover,
+        .project:focus-within {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.15);
+            border-color: var(--primary-color);
+        }
+        
+        .project h3 {
+            color: var(--primary-color);
+            margin-bottom: var(--space-sm);
+            font-size: var(--font-size-xl);
+        }
+        
+        .project-meta {
+            color: var(--text-light);
+            font-size: var(--font-size-sm);
+            margin-bottom: var(--space-md);
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-md);
+        }
+        
+        .project-meta .tag {
+            background-color: var(--primary-color);
+            color: white;
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: 20px;
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+        }
+        
+        .project-description {
+            margin-bottom: var(--space-md);
+            line-height: 1.6;
+        }
+        
+        .project-links {
+            margin-top: var(--space-md);
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-sm);
+        }
+        
+        .project-links a {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--primary-color);
+            color: white;
+            padding: var(--space-sm) var(--space-md);
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            min-height: 44px; /* Touch target */
+        }
+        
+        .project-links a:hover,
+        .project-links a:focus {
+            background-color: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+        
+        /* Enhanced Contact Section */
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-lg);
+            margin-top: var(--space-xl);
+        }
+        
+        .contact-item {
+            text-align: center;
+            padding: var(--space-xl);
+            background-color: var(--surface-color);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item:hover,
+        .contact-item:focus-within {
+            transform: translateY(-2px);
+            border-color: var(--primary-color);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.1);
+        }
+        
+        .contact-item h3 {
+            color: var(--primary-color);
+            margin-bottom: var(--space-sm);
+            font-size: var(--font-size-lg);
+        }
+        
+        .contact-item a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-sm);
+        }
+        
+        .contact-item a:hover,
+        .contact-item a:focus {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--text-color);
+            color: var(--background-color);
+            text-align: center;
+            padding: var(--space-xl) 0;
+            margin-top: var(--space-3xl);
+        }
+        
+        .footer-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+        }
+        
+        /* Accessibility toolbar */
+        .accessibility-toolbar {
+            position: fixed;
+            top: 50%;
+            right: var(--space-md);
+            transform: translateY(-50%);
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: var(--space-sm);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+        }
+        
+        .accessibility-toolbar button {
+            display: block;
+            width: 44px;
+            height: 44px;
+            margin-bottom: var(--space-xs);
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: var(--font-size-lg);
+            transition: all 0.2s ease;
+        }
+        
+        .accessibility-toolbar button:hover,
+        .accessibility-toolbar button:focus {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+        
+        .accessibility-toolbar button:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Font size controls */
+        .font-large {
+            font-size: 1.2em !important;
+        }
+        
+        .font-extra-large {
+            font-size: 1.4em !important;
+        }
+        
+        /* High contrast mode */
+        .high-contrast {
+            --primary-color: #0000ff !important;
+            --text-color: #000000 !important;
+            --background-color: #ffffff !important;
+            --surface-color: #ffffff !important;
+            --border-color: #000000 !important;
+        }
+        
+        /* Screen reader only content */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            :root {
+                --space-3xl: 2.5rem;
+                --space-2xl: 2rem;
+            }
+            
+            nav ul {
+                gap: var(--space-sm);
+            }
+            
+            .nav-container {
+                padding: 0 var(--space-sm);
+            }
+            
+            main {
+                padding: 0 var(--space-sm);
+            }
+            
+            .project-meta {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .accessibility-toolbar {
+                position: relative;
+                top: auto;
+                right: auto;
+                transform: none;
+                margin: var(--space-md) auto;
+                width: fit-content;
+            }
+            
+            .accessibility-toolbar button {
+                display: inline-block;
+                margin-right: var(--space-xs);
+                margin-bottom: 0;
+            }
+        }
+        
+        /* Print styles */
+        @media print {
+            .skip-links,
+            .accessibility-toolbar,
+            nav {
+                display: none !important;
+            }
+            
+            body {
+                font-size: 12pt;
+                line-height: 1.4;
+                color: black;
+                background: white;
+            }
+            
+            h2 {
+                page-break-after: avoid;
+            }
+            
+            .project,
+            .resume-item {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Enhanced skip links for comprehensive navigation -->
+    <div class="skip-links">
+        <a href="#main-content" class="skip-link">Skip to main content</a>
+        <a href="#navigation" class="skip-link">Skip to navigation</a>
+        <a href="#contact" class="skip-link">Skip to contact information</a>
+    </div>
+    
+    <!-- Accessibility toolbar -->
+    <div class="accessibility-toolbar" role="region" aria-label="Accessibility options">
+        <button type="button" 
+                onclick="increaseFontSize()" 
+                aria-label="Increase font size"
+                title="Increase font size">
+            A+
+        </button>
+        <button type="button" 
+                onclick="decreaseFontSize()" 
+                aria-label="Decrease font size"
+                title="Decrease font size">
+            A-
+        </button>
+        <button type="button" 
+                onclick="toggleHighContrast()" 
+                aria-label="Toggle high contrast mode"
+                title="Toggle high contrast">
+            ◐
+        </button>
+        <button type="button" 
+                onclick="resetAccessibility()" 
+                aria-label="Reset accessibility settings"
+                title="Reset settings">
+            ↺
+        </button>
+    </div>
+    
+    <!-- Header with enhanced semantic structure -->
+    <header role="banner">
+        <div class="header-content">
+            <h1>Your Name</h1>
+            <p class="tagline">CS Masters Student | Accessibility Researcher | Inclusive Technology Advocate</p>
+        </div>
+    </header>
+    
+    <!-- Navigation with enhanced ARIA support -->
+    <nav role="navigation" aria-label="Main navigation" id="navigation">
+        <div class="nav-container">
+            <ul>
+                <li><a href="#about" aria-describedby="about-desc">About Me</a></li>
+                <li><a href="#resume" aria-describedby="resume-desc">Resume</a></li>
+                <li><a href="#projects" aria-describedby="projects-desc">Projects</a></li>
+                <li><a href="#contact" aria-describedby="contact-desc">Contact</a></li>
+            </ul>
+            <!-- Hidden descriptions for screen readers -->
+            <div class="sr-only">
+                <div id="about-desc">Learn about my background and passion for accessibility</div>
+                <div id="resume-desc">View my education, experience, and technical skills</div>
+                <div id="projects-desc">Explore my accessibility research and development projects</div>
+                <div id="contact-desc">Find ways to connect with me professionally</div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content with proper landmark structure -->
+    <main id="main-content" role="main">
+        <!-- About Me Section -->
+        <section id="about" aria-labelledby="about-heading">
+            <h2 id="about-heading">About Me</h2>
+            <div class="about-content">
+                <p>Hello! I'm a passionate Computer Science Masters student with a deep commitment to making technology accessible for everyone. My research focuses on accessibility in computer science, and I'm particularly inspired by innovations like Microsoft's Xbox Adaptive Controller that break down barriers and create inclusive experiences.</p>
+                
+                <p>Currently pursuing my Master's degree, I'm dedicated to understanding how we can design and develop technology that serves all users, regardless of their abilities. My dream is to join Microsoft's accessibility team, where I can contribute to groundbreaking projects that transform how people with disabilities interact with technology.</p>
+                
+                <p>When I'm not studying or researching, you'll find me exploring new accessibility tools, contributing to open-source projects, and advocating for inclusive design practices in the tech community.</p>
+            </div>
+            
+            <div class="accessibility-note" role="complementary" aria-labelledby="accessibility-commitment">
+                <h3 id="accessibility-commitment">My Accessibility Commitment</h3>
+                <p>This website itself serves as a demonstration of inclusive design principles. It features keyboard navigation, screen reader optimization, high contrast support, scalable fonts, and respects user preferences for reduced motion. Every element has been carefully crafted to ensure equal access for all visitors.</p>
+            </div>
+        </section>
+        
+        <!-- Resume Section -->
+        <section id="resume" aria-labelledby="resume-heading">
+            <h2 id="resume-heading">Resume</h2>
+            
+            <div class="resume-item">
+                <h3>Master of Science in Computer Science</h3>
+                <div class="date">Expected Graduation: [Year]</div>
+                <div class="institution">University Name</div>
+                <p><strong>Focus:</strong> Accessibility in Computer Science</p>
+                <ul>
+                    <li>Relevant Coursework: Human-Computer Interaction, Assistive Technology, Software Engineering, Web Accessibility</li>
+                    <li>GPA: [Your GPA]</li>
+                    <li>Research: [Brief description of your accessibility research]</li>
+                    <li>Thesis: "Improving Digital Accessibility Through [Your Research Focus]"</li>
+                </ul>
+            </div>
+            
+            <div class="resume-item">
+                <h3>Bachelor of Science in Computer Science</h3>
+                <div class="date">[Graduation Year]</div>
+                <div class="institution">University Name</div>
+                <ul>
+                    <li>Graduated [Magna Cum Laude/with honors if applicable]</li>
+                    <li>Senior Project: Accessible web application following WCAG 2.1 AA guidelines</li>
+                    <li>Accessibility Club: [Leadership role if applicable]</li>
+                </ul>
+            </div>
+            
+            <div class="resume-item">
+                <h3>Technical Skills</h3>
+                <ul>
+                    <li><strong>Programming Languages:</strong> [e.g., Python, Java, JavaScript, C++, HTML, CSS]</li>
+                    <li><strong>Accessibility Tools:</strong> JAWS, NVDA, VoiceOver, Dragon NaturallySpeaking, axe-core, WAVE</li>
+                    <li><strong>Standards & Guidelines:</strong> WCAG 2.1/2.2, Section 508, ADA, ARIA, inclusive design principles</li>
+                    <li><strong>Web Technologies:</strong> React, Node.js, semantic HTML, accessible CSS, progressive enhancement</li>
+                    <li><strong>Testing:</strong> Automated accessibility testing, manual testing with assistive technologies</li>
+                    <li><strong>Other:</strong> Git, databases, cloud platforms, user research methodologies</li>
+                </ul>
+            </div>
+            
+            <div class="resume-item">
+                <h3>Experience & Involvement</h3>
+                <div class="date">[Dates]</div>
+                <div class="institution">[Job Title] - [Company/Organization]</div>
+                <ul>
+                    <li>Conducted accessibility audits for web applications, identifying and documenting WCAG violations</li>
+                    <li>Collaborated with design teams to implement inclusive design patterns</li>
+                    <li>Presented accessibility workshops to development teams</li>
+                    <li>Mentored junior developers on accessible coding practices</li>
+                </ul>
+            </div>
+        </section>
+        
+        <!-- Projects Section -->
+        <section id="projects" aria-labelledby="projects-heading">
+            <h2 id="projects-heading">Projects</h2>
+            <div class="projects-grid">
+                
+                <article class="project">
+                    <h3>Accessibility in Mobile Apps Research</h3>
+                    <div class="project-links">
+                        <a href="#" aria-label="View voice-controlled IDE project on GitHub">
+                            <span aria-hidden="true">📁</span> GitHub
+                        </a>
+                        <a href="#" aria-label="Watch demonstration video">
+                            <span aria-hidden="true">🎥</span> Demo Video
+                        </a>
+                        <a href="#" aria-label="Read technical documentation">
+                            <span aria-hidden="true">📋</span> Technical Report
+                        </a>
+                    </div>
+                </article>
+                
+                <article class="project">
+                    <h3>Accessibility Testing Automation Tool</h3>
+                    <div class="project-meta">
+                        <span class="tag">Open Source</span>
+                        <span class="tag">Testing</span>
+                        <span class="tag">CI/CD</span>
+                        <span>[Date]</span>
+                    </div>
+                    <div class="project-description">
+                        <p>Open-source tool that integrates accessibility testing into development workflows. Automatically scans code commits for accessibility violations and provides detailed remediation guidance. Supports multiple frameworks and has been adopted by several development teams.</p>
+                        <p><strong>Impact:</strong> 500+ GitHub stars, integrated into 50+ projects, reduced accessibility bugs by 70% in pilot programs</p>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" aria-label="View accessibility testing tool on GitHub">
+                            <span aria-hidden="true">📁</span> GitHub
+                        </a>
+                        <a href="#" aria-label="Read tool documentation">
+                            <span aria-hidden="true">📚</span> Docs
+                        </a>
+                        <a href="#" aria-label="Install via NPM">
+                            <span aria-hidden="true">📦</span> NPM Package
+                        </a>
+                    </div>
+                </article>
+                
+            </div>
+        </section>
+        
+        <!-- Contact Section -->
+        <section id="contact" aria-labelledby="contact-heading">
+            <h2 id="contact-heading">Contact Information</h2>
+            <p>I'm always excited to discuss accessibility, technology, and opportunities to make the digital world more inclusive. Feel free to reach out!</p>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <h3>Email</h3>
+                    <a href="mailto:your.email@example.com" 
+                       aria-label="Send email to your.email@example.com">
+                        <span aria-hidden="true">✉️</span>
+                        your.email@example.com
+                    </a>
+                </div>
+                
+                <div class="contact-item">
+                    <h3>GitHub</h3>
+                    <a href="https://github.com/tyanin" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       aria-label="Visit my GitHub profile (opens in new tab)">
+                        <span aria-hidden="true">🔗</span>
+                        github.com/tyanin
+                    </a>
+                </div>
+                
+                <div class="contact-item">
+                    <h3>LinkedIn</h3>
+                    <a href="https://linkedin.com/in/yourprofile" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       aria-label="Connect with me on LinkedIn (opens in new tab)">
+                        <span aria-hidden="true">💼</span>
+                        linkedin.com/in/yourprofile
+                    </a>
+                </div>
+                
+                <div class="contact-item">
+                    <h3>Academic Profile</h3>
+                    <a href="#" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       aria-label="View my academic profile (opens in new tab)">
+                        <span aria-hidden="true">🎓</span>
+                        University Research Page
+                    </a>
+                </div>
+                
+                <div class="contact-item">
+                    <h3>ORCID</h3>
+                    <a href="https://orcid.org/0000-0000-0000-0000" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       aria-label="View my ORCID research profile (opens in new tab)">
+                        <span aria-hidden="true">🔬</span>
+                        ORCID Profile
+                    </a>
+                </div>
+                
+                <div class="contact-item">
+                    <h3>Schedule Meeting</h3>
+                    <a href="https://calendly.com/yourname" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       aria-label="Schedule a meeting with me (opens in new tab)">
+                        <span aria-hidden="true">📅</span>
+                        Book a Meeting
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer with additional accessibility info -->
+    <footer role="contentinfo">
+        <div class="footer-content">
+            <p>&copy; 2025 Your Name. Built with accessibility and inclusion at its core.</p>
+            <p>
+                <a href="#accessibility-statement" 
+                   style="color: inherit; text-decoration: underline;"
+                   aria-label="Read full accessibility statement">
+                    Accessibility Statement
+                </a> | 
+                <a href="mailto:your.email@example.com?subject=Accessibility%20Feedback" 
+                   style="color: inherit; text-decoration: underline;"
+                   aria-label="Send accessibility feedback via email">
+                    Accessibility Feedback
+                </a>
+            </p>
+            
+            <!-- Hidden accessibility statement -->
+            <div id="accessibility-statement" class="sr-only">
+                <h2>Accessibility Statement</h2>
+                <p>This website is designed to be accessible to all users, including those using assistive technologies. If you encounter any accessibility barriers, please contact me at your.email@example.com and I will work to address them promptly.</p>
+                <p>Accessibility features include: keyboard navigation, screen reader compatibility, high contrast support, scalable text, reduced motion respect, semantic HTML structure, and comprehensive ARIA labeling.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript for accessibility features -->
+    <script>
+        // Font size control
+        let fontSizeLevel = 0;
+        
+        function increaseFontSize() {
+            if (fontSizeLevel < 2) {
+                fontSizeLevel++;
+                updateFontSize();
+                announceToScreenReader('Font size increased');
+            }
+        }
+        
+        function decreaseFontSize() {
+            if (fontSizeLevel > -1) {
+                fontSizeLevel--;
+                updateFontSize();
+                announceToScreenReader('Font size decreased');
+            }
+        }
+        
+        function updateFontSize() {
+            const body = document.body;
+            body.classList.remove('font-large', 'font-extra-large');
+            
+            if (fontSizeLevel === 1) {
+                body.classList.add('font-large');
+            } else if (fontSizeLevel === 2) {
+                body.classList.add('font-extra-large');
+            }
+            
+            // Save preference
+            localStorage.setItem('fontSizeLevel', fontSizeLevel);
+        }
+        
+        // High contrast toggle
+        function toggleHighContrast() {
+            const body = document.body;
+            const isHighContrast = body.classList.toggle('high-contrast');
+            
+            announceToScreenReader(
+                isHighContrast ? 'High contrast mode enabled' : 'High contrast mode disabled'
+            );
+            
+            // Save preference
+            localStorage.setItem('highContrast', isHighContrast);
+        }
+        
+        // Reset all accessibility settings
+        function resetAccessibility() {
+            fontSizeLevel = 0;
+            const body = document.body;
+            body.classList.remove('font-large', 'font-extra-large', 'high-contrast');
+            
+            // Clear saved preferences
+            localStorage.removeItem('fontSizeLevel');
+            localStorage.removeItem('highContrast');
+            
+            announceToScreenReader('Accessibility settings reset to default');
+        }
+        
+        // Announce changes to screen readers
+        function announceToScreenReader(message) {
+            const announcement = document.createElement('div');
+            announcement.setAttribute('aria-live', 'polite');
+            announcement.setAttribute('aria-atomic', 'true');
+            announcement.className = 'sr-only';
+            announcement.textContent = message;
+            
+            document.body.appendChild(announcement);
+            
+            // Remove after announcement
+            setTimeout(() => {
+                document.body.removeChild(announcement);
+            }, 1000);
+        }
+        
+        // Load saved preferences on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load font size preference
+            const savedFontSize = localStorage.getItem('fontSizeLevel');
+            if (savedFontSize !== null) {
+                fontSizeLevel = parseInt(savedFontSize);
+                updateFontSize();
+            }
+            
+            // Load high contrast preference
+            const savedHighContrast = localStorage.getItem('highContrast');
+            if (savedHighContrast === 'true') {
+                document.body.classList.add('high-contrast');
+            }
+            
+            // Enhanced keyboard navigation
+            const focusableElements = 'a, button, input, textarea, select, details, [tabindex]:not([tabindex="-1"])';
+            const focusableNodes = document.querySelectorAll(focusableElements);
+            
+            // Add focus indicators for better keyboard navigation
+            focusableNodes.forEach(element => {
+                element.addEventListener('focus', function() {
+                    this.setAttribute('data-keyboard-focused', 'true');
+                });
+                
+                element.addEventListener('blur', function() {
+                    this.removeAttribute('data-keyboard-focused');
+                });
+            });
+            
+            // Smooth scrolling for anchor links with offset for sticky nav
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    
+                    if (target) {
+                        const navHeight = document.querySelector('nav').offsetHeight;
+                        const targetPosition = target.offsetTop - navHeight - 20;
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+                        });
+                        
+                        // Set focus to target for screen readers
+                        target.setAttribute('tabindex', '-1');
+                        target.focus();
+                    }
+                });
+            });
+            
+            // Update current page indicator in navigation
+            const currentSection = getCurrentSection();
+            updateNavigationState(currentSection);
+        });
+        
+        // Get current section based on scroll position
+        function getCurrentSection() {
+            const sections = document.querySelectorAll('section[id]');
+            const navHeight = document.querySelector('nav').offsetHeight;
+            
+            for (let i = sections.length - 1; i >= 0; i--) {
+                const section = sections[i];
+                const rect = section.getBoundingClientRect();
+                
+                if (rect.top <= navHeight + 50) {
+                    return section.id;
+                }
+            }
+            
+            return sections[0]?.id || '';
+        }
+        
+        // Update navigation ARIA current state
+        function updateNavigationState(currentSection) {
+            const navLinks = document.querySelectorAll('nav a');
+            
+            navLinks.forEach(link => {
+                const href = link.getAttribute('href').substring(1);
+                if (href === currentSection) {
+                    link.setAttribute('aria-current', 'page');
+                } else {
+                    link.removeAttribute('aria-current');
+                }
+            });
+        }
+        
+        // Update navigation state on scroll
+        let scrollTimeout;
+        window.addEventListener('scroll', function() {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                const currentSection = getCurrentSection();
+                updateNavigationState(currentSection);
+            }, 100);
+        });
+        
+        // Escape key handling for better UX
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                // Remove focus from currently focused element
+                if (document.activeElement && document.activeElement.blur) {
+                    document.activeElement.blur();
+                }
+            }
+        });
+        
+        // Announce page load completion for screen readers
+        window.addEventListener('load', function() {
+            announceToScreenReader('Page loaded successfully. Use navigation links or tab to explore content.');
+        });
+    </script>
+</body>
+</html>="project-meta">
+                        <span class="tag">Research</span>
+                        <span class="tag">Mobile Accessibility</span>
+                        <span class="tag">User Studies</span>
+                        <span>[Date]</span>
+                    </div>
+                    <div class="project-description">
+                        <p>Comprehensive research project examining accessibility barriers in mobile applications. Conducted user studies with individuals using various assistive technologies, analyzed accessibility compliance across popular apps, and developed recommendations for inclusive mobile design.</p>
+                        <p><strong>Advisor:</strong> [Professor Name]</p>
+                        <p><strong>Impact:</strong> Findings presented at [Conference Name] and influenced mobile app accessibility guidelines at [Organization]</p>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" aria-label="View research project on GitHub">
+                            <span aria-hidden="true">📁</span> GitHub
+                        </a>
+                        <a href="#" aria-label="Read published research paper">
+                            <span aria-hidden="true">📄</span> Paper
+                        </a>
+                        <a href="#" aria-label="Watch project presentation">
+                            <span aria-hidden="true">🎥</span> Presentation
+                        </a>
+                    </div>
+                </article>
+                
+                <article class="project">
+                    <h3>Inclusive Web Component Library</h3>
+                    <div class="project-meta">
+                        <span class="tag">Development</span>
+                        <span class="tag">WCAG 2.1</span>
+                        <span class="tag">React</span>
+                        <span>[Date]</span>
+                    </div>
+                    <div class="project-description">
+                        <p>Developed a comprehensive React component library with accessibility built-in from the ground up. All components exceed WCAG 2.1 AA standards and include comprehensive keyboard navigation, screen reader support, and high contrast compatibility.</p>
+                        <p><strong>Features:</strong> Form controls, navigation components, modal dialogs, data tables, all with extensive accessibility testing</p>
+                        <p><strong>Testing:</strong> Validated with multiple screen readers and automated testing tools</p>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" aria-label="View component library on GitHub">
+                            <span aria-hidden="true">📁</span> GitHub
+                        </a>
+                        <a href="#" aria-label="View component library documentation">
+                            <span aria-hidden="true">📚</span> Documentation
+                        </a>
+                        <a href="#" aria-label="Try live demo of components">
+                            <span aria-hidden="true">🔗</span> Live Demo
+                        </a>
+                    </div>
+                </article>
+                
+                <article class="project">
+                    <h3>Voice-Controlled Development Environment</h3>
+                    <div class="project-meta">
+                        <span class="tag">Innovation</span>
+                        <span class="tag">Voice Control</span>
+                        <span class="tag">Accessibility</span>
+                        <span>[Date]</span>
+                    </div>
+                    <div class="project-description">
+                        <p>Prototype development environment designed for programmers with limited mobility. Features advanced voice recognition for code navigation, editing, and debugging. Reduces reliance on traditional keyboard and mouse inputs.</p>
+                        <p><strong>Team:</strong> [Team member names] | <strong>My Role:</strong> Lead Developer & Accessibility Consultant</p>
+                        <p><strong>Recognition:</strong> Winner of [Hackathon/Competition Name] Accessibility Innovation Award</p>
+                    </div>
+                    <div class
