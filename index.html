@@ -18,17 +18,18 @@
         
         /* CSS Custom Properties for easy theming */
         :root {
-            --primary-color: #667eea;
-            --primary-dark: #5a6fd8;
-            --secondary-color: #764ba2;
-            --text-color: #2c3e50;
-            --text-light: #6c757d;
-            --background-color: #ffffff;
-            --surface-color: #f8f9fa;
-            --border-color: #e9ecef;
-            --focus-color: #ff6b6b;
-            --success-color: #51cf66;
-            --warning-color: #ffd43b;
+            --primary-color: #2d5a27;        /* Forest green - for accents */
+            --primary-dark: #1e3f1a;         /* Darker forest green */
+            --secondary-color: #4a7c59;       /* Medium sage green */
+            --accent-color: #6b8e23;          /* Olive green */
+            --text-color: #2c3e50;            /* Dark blue-gray for main text */
+            --text-light: #6c757d;            /* Gray for secondary text */
+            --background-color: #ffffff;      /* Clean white background */
+            --surface-color: #f8f9fa;         /* Light neutral gray */
+            --border-color: #e9ecef;          /* Light gray border */
+            --focus-color: #ff6b35;           /* Orange for high contrast focus */
+            --success-color: #4a7c59;         /* Green success */
+            --warning-color: #d4a574;         /* Earthy orange warning */
             
             /* Typography scale */
             --font-size-xs: 0.75rem;
@@ -53,7 +54,7 @@
         /* High contrast theme */
         @media (prefers-contrast: high) {
             :root {
-                --primary-color: #0000ff;
+                --primary-color: #0d4f07;     /* Very dark green */
                 --text-color: #000000;
                 --background-color: #ffffff;
                 --surface-color: #ffffff;
@@ -64,11 +65,14 @@
         /* Dark mode support */
         @media (prefers-color-scheme: dark) {
             :root {
-                --text-color: #e9ecef;
-                --text-light: #adb5bd;
-                --background-color: #1a1a1a;
-                --surface-color: #2d3748;
-                --border-color: #4a5568;
+                --primary-color: #7cb342;     /* Brighter green for dark mode */
+                --primary-dark: #689f38;      /* Medium green */
+                --secondary-color: #9ccc65;   /* Light green */
+                --text-color: #e9ecef;        /* Light gray text */
+                --text-light: #adb5bd;        /* Medium gray for secondary text */
+                --background-color: #1a1a1a;  /* Dark background */
+                --surface-color: #2d3748;     /* Dark gray surface */
+                --border-color: #4a5568;      /* Medium gray border */
             }
         }
         
@@ -270,7 +274,7 @@
         
         /* Accessibility statement */
         .accessibility-note {
-            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e8f5e8 100%);
             border: 1px solid var(--primary-color);
             border-radius: 8px;
             padding: var(--space-lg);
@@ -356,7 +360,7 @@
         .project:hover,
         .project:focus-within {
             transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.15);
+            box-shadow: 0 12px 30px rgba(45, 90, 39, 0.15);
             border-color: var(--primary-color);
         }
         
@@ -436,7 +440,7 @@
         .contact-item:focus-within {
             transform: translateY(-2px);
             border-color: var(--primary-color);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.1);
+            box-shadow: 0 8px 25px rgba(45, 90, 39, 0.1);
         }
         
         .contact-item h3 {
@@ -527,7 +531,7 @@
         
         /* High contrast mode */
         .high-contrast {
-            --primary-color: #0000ff !important;
+            --primary-color: #0d4f07 !important;     /* Very dark forest green */
             --text-color: #000000 !important;
             --background-color: #ffffff !important;
             --surface-color: #ffffff !important;
