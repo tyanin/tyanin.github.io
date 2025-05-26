@@ -99,23 +99,30 @@
         }
 
         .header-content {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: var(--space-xl);
+            text-align: left;
         }
 
         .profile-photo {
-            width: 160px;
-            height: 160px;
+            width: 200px;
+            height: 200px;
             border-radius: 50%;
             border: 4px solid rgba(255, 255, 255, 0.2);
-            margin: 0 auto var(--space-lg);
-            display: block;
             box-shadow: var(--shadow-lg);
             background: rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 4rem;
+            font-size: 5rem;
+            flex-shrink: 0;
+        }
+
+        .header-text {
+            flex: 1;
         }
 
         .name {
@@ -475,6 +482,18 @@
                 font-size: 2.5rem;
             }
 
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: var(--space-lg);
+            }
+
+            .profile-photo {
+                width: 150px;
+                height: 150px;
+                font-size: 4rem;
+            }
+
             .about-grid {
                 grid-template-columns: 1fr;
                 gap: var(--space-lg);
@@ -516,10 +535,90 @@
             }
         }
 
-        /* Focus styles for accessibility */
-        *:focus {
+        /* Dark mode styles */
+        :root[data-theme="dark"] {
+            --primary-blue: #60a5fa;
+            --light-blue: #93c5fd;
+            --dark-blue: #3b82f6;
+            --accent-blue: #93c5fd;
+            --navy: #1e293b;
+            --slate: #334155;
+            --light-gray: #1e293b;
+            --medium-gray: #374151;
+            --text-dark: #f1f5f9;
+            --text-medium: #cbd5e1;
+            --white: #0f172a;
+        }
+
+        /* Font size classes */
+        .font-small {
+            font-size: 0.9em;
+        }
+        
+        .font-normal {
+            font-size: 1em;
+        }
+        
+        .font-large {
+            font-size: 1.1em;
+        }
+        
+        .font-xl {
+            font-size: 1.2em;
+        }
+
+        /* Accessibility toolbar */
+        .accessibility-toolbar {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--white);
+            border: 2px solid var(--medium-gray);
+            border-radius: var(--radius-lg);
+            padding: var(--space-sm);
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            display: flex;
+            gap: var(--space-xs);
+            flex-direction: column;
+        }
+
+        .accessibility-btn {
+            background: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius-sm);
+            padding: var(--space-xs) var(--space-sm);
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            min-width: 40px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .accessibility-btn:hover {
+            background: var(--dark-blue);
+            transform: scale(1.05);
+        }
+
+        .accessibility-btn:focus {
             outline: 2px solid var(--accent-blue);
             outline-offset: 2px;
+        }
+
+        /* Responsive toolbar */
+        @media (max-width: 768px) {
+            .accessibility-toolbar {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                top: auto;
+                flex-direction: row;
+            }
         }
 
         /* Smooth animations */
@@ -532,16 +631,33 @@
 </head>
 
 <body>
+    <!-- Accessibility Toolbar -->
+    <div class="accessibility-toolbar" role="region" aria-label="Accessibility Options">
+        <button class="accessibility-btn" onclick="toggleTheme()" aria-label="Toggle dark/light mode" title="Toggle Theme">
+            🌙
+        </button>
+        <button class="accessibility-btn" onclick="decreaseFontSize()" aria-label="Decrease font size" title="Decrease Font Size">
+            A-
+        </button>
+        <button class="accessibility-btn" onclick="increaseFontSize()" aria-label="Increase font size" title="Increase Font Size">
+            A+
+        </button>
+        <button class="accessibility-btn" onclick="resetAccessibility()" aria-label="Reset accessibility settings" title="Reset Settings">
+            ↺
+        </button>
+    </div>
     <!-- Header -->
     <header class="header">
         <div class="container">
             <div class="header-content">
                 <div class="profile-photo">👤</div>
-                <h1 class="name">Tyanin Opdahl</h1>
-                <p class="title">MS & BS Computer Science Student • Disability Fairness Researcher • Accessibility Advocate</p>
-                <p class="header-description">
-                    Passionate about creating equitable technology through research in disability fairness and intersectionality in machine learning systems at Western Washington University.
-                </p>
+                <div class="header-text">
+                    <h1 class="name">Tyanin Opdahl</h1>
+                    <p class="title">MS & BS Computer Science Student • Disability Fairness Researcher • Accessibility Advocate</p>
+                    <p class="header-description">
+                        Passionate about creating equitable technology through research in disability fairness and intersectionality in machine learning systems at Western Washington University.
+                    </p>
+                </div>
             </div>
         </div>
     </header>
@@ -551,8 +667,8 @@
         <div class="nav-container">
             <ul class="nav-list">
                 <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#experience" class="nav-link">Experience</a></li>
                 <li><a href="#education" class="nav-link">Education</a></li>
+                <li><a href="#experience" class="nav-link">Experience</a></li>
                 <li><a href="#volunteer" class="nav-link">Leadership</a></li>
                 <li><a href="#projects" class="nav-link">Projects</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
@@ -595,6 +711,44 @@
             </div>
         </section>
 
+        <!-- Education Section -->
+        <section id="education" class="section">
+            <h2 class="section-title">Education</h2>
+            <div class="experience-grid">
+                <div class="experience-card">
+                    <div class="experience-header">
+                        <div>
+                            <h3 class="experience-title">MS in Computer Science</h3>
+                            <p class="experience-company">Western Washington University</p>
+                            <p class="experience-type">Graduate Program • Research Focus: Disability Fairness in ML</p>
+                        </div>
+                        <span class="experience-date">Expected June 2026</span>
+                    </div>
+                    <ul class="experience-achievements">
+                        <li><strong>Advanced Graduate Coursework:</strong> Automata and Formal Language Theory, Natural Language Processing, Advanced Machine Learning, Research Methods</li>
+                        <li><strong>Research Focus:</strong> Disability fairness and intersectionality in machine learning systems</li>
+                        <li><strong>Thesis:</strong> Exploring fairness metrics for individuals with disabilities in automated decision systems</li>
+                    </ul>
+                </div>
+
+                <div class="experience-card">
+                    <div class="experience-header">
+                        <div>
+                            <h3 class="experience-title">BS in Computer Science</h3>
+                            <p class="experience-company">Western Washington University</p>
+                            <p class="experience-type">Combined/Accelerated Program • Minor in Creative Writing</p>
+                        </div>
+                        <span class="experience-date">Expected June 2026</span>
+                    </div>
+                    <ul class="experience-achievements">
+                        <li><strong>Core Coursework:</strong> Operating Systems Internals, Computational Languages, Object Oriented Design, Analysis of Algorithms & Data Structures, Computer Networks, Secure Software Development</li>
+                        <li><strong>Programming Proficiency:</strong> Java, C, Python, SQL, HTML/CSS, JavaScript</li>
+                        <li><strong>Technical Projects:</strong> Built complete operating system with thread/mutex functionality, developed AVL tree processing 100,000 lines in under one second, created optimized Hash table and Heap implementations</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
         <!-- Experience Section -->
         <section id="experience" class="section">
             <h2 class="section-title">Professional Experience</h2>
@@ -617,111 +771,6 @@
                 <div class="experience-card">
                     <div class="experience-header">
                         <div>
-                            <h3 class="experience-title">Research Assistant & Author</h3>
-                            <p class="experience-company">WWU Department of Computer Science</p>
-                            <p class="experience-type">Academic Research</p>
-                        </div>
-                        <span class="experience-date">April 2023 - Present</span>
-                    </div>
-                    <ul class="experience-achievements">
-                        <li>Authored and presented ACM paper "Crafting Disability Fairness Learning in Data Science" at SIGCSE Technical Symposium 2024</li>
-                        <li>Developing iOS app for neurodivergent children's language development, focusing on correct colloquial pronoun usage</li>
-                        <li>Created transcription software for text file transcription using machine learning techniques</li>
-                    </ul>
-                </div>
-
-                <div class="experience-card">
-                    <div class="experience-header">
-                        <div>
-                            <h3 class="experience-title">CSE Strategic Planning Task Force Member</h3>
-                            <p class="experience-company">Western Washington University</p>
-                            <p class="experience-type">College of Science and Engineering</p>
-                        </div>
-                        <span class="experience-date">August 2023 - Present</span>
-                    </div>
-                    <ul class="experience-achievements">
-                        <li>Working closely with the Dean and Department Heads as the voice for students in developing the college's 5-7 year strategic plan</li>
-                        <li>Responsibilities include note-taking, document organization, and leading student meetings</li>
-                    </ul>
-                </div>
-
-                <div class="experience-card">
-                    <div class="experience-header">
-                        <div>
-                            <h3 class="experience-title">Computer Science Department Ambassador</h3>
-                            <p class="experience-company">Western Washington University</p>
-                            <p class="experience-type">Student Leadership</p>
-                        </div>
-                        <span class="experience-date">August 2023 - Present</span>
-                    </div>
-                    <ul class="experience-achievements">
-                        <li>Act as community liaison between students, faculty, and departments</li>
-                        <li>Created and hosted events on overcoming Imposter Syndrome and professional development workshops</li>
-                        <li>Engage in advocacy, equity, and diversity initiatives in STEM</li>
-                    </ul>
-                </div>
-
-                <div class="experience-card">
-                    <div class="experience-header">
-                        <div>
-                            <h3 class="experience-title">Membership and Community Development Intern</h3>
-                            <p class="experience-company">SPIE, The International Society for Optics and Photonics</p>
-                            <p class="experience-type">Professional Organization</p>
-                        </div>
-                        <span class="experience-date">April 2024 - October 2024</span>
-                    </div>
-                    <ul class="experience-achievements">
-                        <li>Assessed membership trends and data to provide actionable insights for strategic decision-making</li>
-                        <li>Designed and implemented community development programs through direct member contact</li>
-                        <li>Enhanced member retention through program building and evaluation</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Education Section -->
-        <section id="education" class="section">
-            <h2 class="section-title">Education</h2>
-            <div class="experience-card">
-                <div class="experience-header">
-                    <div>
-                        <h3 class="experience-title">MS & BS in Computer Science</h3>
-                        <p class="experience-company">Western Washington University</p>
-                        <p class="experience-type">Combined/Accelerated Program • Minor in Creative Writing</p>
-                    </div>
-                    <span class="experience-date">Expected June 2026</span>
-                </div>
-                <ul class="experience-achievements">
-                    <li><strong>Advanced Coursework:</strong> Automata and Formal Language Theory, Natural Language Processing, Operating Systems Internals, Computational Languages, Object Oriented Design</li>
-                    <li><strong>Technical Projects:</strong> Built complete operating system with thread/mutex functionality, developed AVL tree processing 100,000 lines in under one second</li>
-                    <li><strong>Research Focus:</strong> Disability fairness and intersectionality in machine learning systems</li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- Volunteer Section -->
-        <section id="volunteer" class="section">
-            <h2 class="section-title">Leadership & Volunteer Experience</h2>
-            <div class="experience-grid">
-                <div class="experience-card">
-                    <div class="experience-header">
-                        <div>
-                            <h3 class="experience-title">Outreach Officer</h3>
-                            <p class="experience-company">Association of Women in Computing</p>
-                            <p class="experience-type">Professional Development & Advocacy</p>
-                        </div>
-                        <span class="experience-date">April 2022 - Present</span>
-                    </div>
-                    <ul class="experience-achievements">
-                        <li>Prepare and present workshops for various local clubs and organizations</li>
-                        <li>Coordinate field events between industry and academia</li>
-                        <li>Organize industry and academic events to bridge sector gaps</li>
-                    </ul>
-                </div>
-
-                <div class="experience-card">
-                    <div class="experience-header">
-                        <div>
                             <h3 class="experience-title">Lead Student Ambassador</h3>
                             <p class="experience-company">WWU University Advancement</p>
                             <p class="experience-type">Student Leadership</p>
@@ -732,6 +781,7 @@
                         <li>Lead university events and provide information through promotional activities</li>
                         <li>Analyze mass amounts of data to ensure information integrity and prepare database reports</li>
                         <li>Guide and direct large groups of people at university events</li>
+                        <li>Philanthropize, promote, and provide information about the university through events</li>
                     </ul>
                 </div>
 
@@ -746,8 +796,71 @@
                     </div>
                     <ul class="experience-achievements">
                         <li>Solely represented WWU's largest annual philanthropy event through print appeals & billboards</li>
-                        <li>Shared academic story across multiple media platforms</li>
+                        <li>Shared academic story across multiple media platforms including social media, web articles, letters, emails, and personalized videos</li>
                         <li>Campaign raised over $1.1 million from over 3,000 donors</li>
+                    </ul>
+                </div>
+
+        <li>Assessed membership trends and data to provide actionable insights for strategic decision-making</li>
+                        <li>Designed and implemented community development programs through direct member contact</li>
+                        <li>Enhanced member retention through program building and evaluation</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Volunteer & Leadership Section -->
+        <section id="volunteer" class="section">
+            <h2 class="section-title">Leadership & Volunteer Experience</h2>
+            <div class="experience-grid">
+                <div class="experience-card">
+                    <div class="experience-header">
+                        <div>
+                            <h3 class="experience-title">Research Assistant & Author</h3>
+                            <p class="experience-company">WWU Department of Computer Science</p>
+                            <p class="experience-type">Academic Research</p>
+                        </div>
+                        <span class="experience-date">April 2023 - Present</span>
+                    </div>
+                    <ul class="experience-achievements">
+                        <li>Authored and presented ACM paper "Crafting Disability Fairness Learning in Data Science: A Student-Centric Pedagogical Approach" at regional SIGCSE Technical Symposium 2024</li>
+                        <li>Developing iOS app for neurodivergent children's language development, focusing on correct colloquial pronoun usage</li>
+                        <li>Created transcription software for text file transcription using machine learning techniques</li>
+                        <li>Research advisor: Dr. Yasmine N. Elglaly</li>
+                    </ul>
+                </div>
+
+                <div class="experience-card">
+                    <div class="experience-header">
+                        <div>
+                            <h3 class="experience-title">Outreach Officer</h3>
+                            <p class="experience-company">Association of Women in Computing</p>
+                            <p class="experience-type">Association for Gender Inclusion in Computing</p>
+                        </div>
+                        <span class="experience-date">April 2022 - Present</span>
+                    </div>
+                    <ul class="experience-achievements">
+                        <li>Prepare and present workshops for various local clubs and organizations</li>
+                        <li>Write documentation, coordinate field events between industry and academia</li>
+                        <li>Organize industry and academic events to bridge the gap between sectors</li>
+                        <li>Initiate conversation and inclusion between individuals and organizations in both large scales and individual mentorships</li>
+                    </ul>
+                </div>
+
+                <div class="experience-card">
+                    <div class="experience-header">
+                        <div>
+                            <h3 class="experience-title">Member & Workshop Leader</h3>
+                            <p class="experience-company">Pink Moon Society</p>
+                            <p class="experience-type">Community Organization</p>
+                        </div>
+                        <span class="experience-date">May 2025 - Present</span>
+                    </div>
+                    <ul class="experience-achievements">
+                        <li>Prepare and present workshops for various local clubs focusing on inclusion and community building</li>
+                        <li>Write documentation and coordinate field events between industry and academia</li>
+                        <li>Selected as student panelist at the 2024 and 2025 Annual Slesnick Symposiums</li>
+                        <li>Advocated for equitable higher education through personal anecdotes and insights</li>
                     </ul>
                 </div>
             </div>
@@ -912,6 +1025,126 @@
     </footer>
 
     <script>
+        // Accessibility Functions
+        let currentFontSize = 1; // 0 = small, 1 = normal, 2 = large, 3 = xl
+        let isDarkMode = false;
+
+        // Theme toggle
+        function toggleTheme() {
+            isDarkMode = !isDarkMode;
+            const root = document.documentElement;
+            const themeButton = document.querySelector('.accessibility-toolbar button[onclick="toggleTheme()"]');
+            
+            if (isDarkMode) {
+                root.setAttribute('data-theme', 'dark');
+                themeButton.textContent = '☀️';
+                themeButton.setAttribute('aria-label', 'Switch to light mode');
+                themeButton.setAttribute('title', 'Switch to Light Mode');
+            } else {
+                root.removeAttribute('data-theme');
+                themeButton.textContent = '🌙';
+                themeButton.setAttribute('aria-label', 'Switch to dark mode');
+                themeButton.setAttribute('title', 'Switch to Dark Mode');
+            }
+            
+            // Save preference
+            localStorage.setItem('darkMode', isDarkMode);
+            announceToScreenReader(isDarkMode ? 'Dark mode enabled' : 'Light mode enabled');
+        }
+
+        // Font size controls
+        function increaseFontSize() {
+            if (currentFontSize < 3) {
+                currentFontSize++;
+                updateFontSize();
+                announceToScreenReader('Font size increased');
+            }
+        }
+
+        function decreaseFontSize() {
+            if (currentFontSize > 0) {
+                currentFontSize--;
+                updateFontSize();
+                announceToScreenReader('Font size decreased');
+            }
+        }
+
+        function updateFontSize() {
+            const body = document.body;
+            // Remove all font size classes
+            body.classList.remove('font-small', 'font-normal', 'font-large', 'font-xl');
+            
+            // Add appropriate class
+            const fontClasses = ['font-small', 'font-normal', 'font-large', 'font-xl'];
+            body.classList.add(fontClasses[currentFontSize]);
+            
+            // Save preference
+            localStorage.setItem('fontSize', currentFontSize);
+        }
+
+        // Reset all accessibility settings
+        function resetAccessibility() {
+            currentFontSize = 1;
+            isDarkMode = false;
+            
+            const root = document.documentElement;
+            const body = document.body;
+            const themeButton = document.querySelector('.accessibility-toolbar button[onclick="toggleTheme()"]');
+            
+            // Reset theme
+            root.removeAttribute('data-theme');
+            themeButton.textContent = '🌙';
+            themeButton.setAttribute('aria-label', 'Switch to dark mode');
+            themeButton.setAttribute('title', 'Switch to Dark Mode');
+            
+            // Reset font size
+            body.classList.remove('font-small', 'font-normal', 'font-large', 'font-xl');
+            body.classList.add('font-normal');
+            
+            // Clear saved preferences
+            localStorage.removeItem('darkMode');
+            localStorage.removeItem('fontSize');
+            
+            announceToScreenReader('Accessibility settings reset to default');
+        }
+
+        // Announce changes to screen readers
+        function announceToScreenReader(message) {
+            const announcement = document.createElement('div');
+            announcement.setAttribute('aria-live', 'polite');
+            announcement.setAttribute('aria-atomic', 'true');
+            announcement.className = 'sr-only';
+            announcement.textContent = message;
+            
+            document.body.appendChild(announcement);
+            
+            // Remove after announcement
+            setTimeout(() => {
+                if (document.body.contains(announcement)) {
+                    document.body.removeChild(announcement);
+                }
+            }, 1000);
+        }
+
+        // Load saved preferences on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load saved theme preference
+            const savedDarkMode = localStorage.getItem('darkMode');
+            if (savedDarkMode === 'true') {
+                toggleTheme();
+            }
+            
+            // Load saved font size preference
+            const savedFontSize = localStorage.getItem('fontSize');
+            if (savedFontSize !== null) {
+                currentFontSize = parseInt(savedFontSize);
+                updateFontSize();
+            } else {
+                // Set default font size
+                document.body.classList.add('font-normal');
+            }
+        });
+
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -969,6 +1202,23 @@
                 observer.observe(card);
             });
         });
+
+        // Screen reader only class
+        const srOnlyStyle = document.createElement('style');
+        srOnlyStyle.textContent = `
+            .sr-only {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border: 0;
+            }
+        `;
+        document.head.appendChild(srOnlyStyle);
     </script>
 </body>
 </html>
