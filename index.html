@@ -108,16 +108,14 @@
         }
 
         .profile-photo {
-            width: 200px;
-            height: 260px;
+            width: 180px;
+            height: 220px;
             object-fit: cover;
             object-position: center;
             flex-shrink: 0;
             border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 8px !important;
-            /* Force rectangular shape */
-            clip-path: none !important;
-            -webkit-clip-path: none !important;
+            border-radius: 8px;
+            display: block;
         }
 
         .header-text {
@@ -649,7 +647,7 @@
     <header class="header">
         <div class="container">
             <div class="header-content">
-                <img src="your-photo.jpg" alt="Professional photo of Tyanin Opdahl" class="profile-photo">
+                <img src="profile_photo.jpg" alt="Professional photo of Tyanin Opdahl" class="profile-photo">
                 <div class="header-text">
                     <h1 class="name">Tyanin Opdahl</h1>
                     <p class="title">MS & BS Computer Science Student • Disability Fairness Researcher • Accessibility Advocate</p>
